@@ -1,75 +1,79 @@
 #!/bin/bash
 
-# Define color variables
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-CYAN='\033[0;36m'
-RESET='\033[0m' # Reset color
+# Ensure the script is run as root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root (use sudo)." >&2
+    exit 1
+fi
 
-# Function to display the menu
-display_menu() {
-    echo -e "${CYAN}Options:${RESET}"
-    echo "1) Use a randomly generated MAC address"
-    echo "2) Generate a new random MAC address"
-    echo "3) Manually enter a MAC address"
-    echo "4) Exit"
-    echo -n "Choose an option [1-4]: "
+# Function to generate a valid random MAC address
+generate_mac() {
+    printf '%02x:%02x:%02x:%02x:%02x:%02x\n' \
+        $((RANDOM % 256)) \
+        $((RANDOM % 256)) \
+        $((RANDOM % 256)) \
+        $((RANDOM % 256)) \
+        $((RANDOM % 256)) \
+        $((RANDOM % 256))
 }
 
-# Function to generate a random MAC address
-generate_random_mac() {
-    echo $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//')
-}
-
-# Function to spoof the MAC address
-spoof_mac() {
-    local mac_address=$1
-    echo -e "${YELLOW}Checking the status of en0 before changing the MAC address...${RESET}"
-    ifconfig en0
-
-    echo -e "${CYAN}Spoofing MAC address to ${mac_address}...${RESET}"
-    networksetup -setairportpower en0 off
-    if sudo ifconfig en0 ether "$mac_address"; then
-        echo -e "${GREEN}MAC address spoofed successfully to ${mac_address}.${RESET}"
-    else
-        echo -e "${RED}Failed to spoof MAC address. Exiting.${RESET}"
-        networksetup -setairportpower en0 on
-        exit 1
-    fi
-    networksetup -setairportpower en0 on
-}
-
-# Main script logic
+# Prompt the user for action
 while true; do
-    display_menu
-    read -r choice
+    echo
+    echo "Options:"
+    echo "1) Use a randomly generated MAC address"
+    echo "2) Manually enter a MAC address"
+    echo "3) Exit"
+    read -rp "Choose an option [1-3]: " option
 
-    case $choice in
+    case $option in
         1)
-            mac_address=$(generate_random_mac)
-            echo -e "${YELLOW}Using randomly generated MAC address: ${mac_address}${RESET}"
-            spoof_mac "$mac_address"
+            NEW_MAC=$(generate_mac)
+            echo "Using randomly generated MAC address: $NEW_MAC"
             break
             ;;
         2)
-            mac_address=$(generate_random_mac)
-            echo -e "${YELLOW}Generated a new random MAC address: ${mac_address}${RESET}"
-            spoof_mac "$mac_address"
-            break
+            read -rp "Enter the MAC address you want to use (format xx:xx:xx:xx:xx:xx): " NEW_MAC
+            if [[ $NEW_MAC =~ ^([0-9a-f]{2}:){5}[0-9a-f]{2}$ ]]; then
+                echo "Using manually entered MAC address: $NEW_MAC"
+                break
+            else
+                echo "Invalid MAC address format. Please try again."
+            fi
             ;;
         3)
-            echo -n "Enter the MAC address you want to spoof: "
-            read -r mac_address
-            spoof_mac "$mac_address"
-            break
-            ;;
-        4)
-            echo -e "${CYAN}Exiting the script. Goodbye!${RESET}"
+            echo "Exiting without spoofing MAC address."
             exit 0
             ;;
         *)
-            echo -e "${RED}Invalid option. Please try again.${RESET}"
+            echo "Invalid option. Please choose again."
             ;;
     esac
 done
+
+# Disable Wi-Fi
+echo "Turning off Wi-Fi on en0..."
+networksetup -setairportpower en0 off
+if [ $? -ne 0 ]; then
+    echo "Failed to disable Wi-Fi. Exiting."
+    exit 1
+fi
+
+# Spoof the MAC address using the spoof-mac tool
+echo "Setting new MAC address to $NEW_MAC..."
+sudo spoof-mac set "$NEW_MAC" en0
+if [ $? -ne 0 ]; then
+    echo "Failed to set MAC address. Exiting."
+    exit 1
+fi
+
+# Re-enable Wi-Fi
+echo "Turning on Wi-Fi on en0..."
+networksetup -setairportpower en0 on
+if [ $? -ne 0 ]; then
+    echo "Failed to enable Wi-Fi. Exiting."
+    exit 1
+fi
+
+# Confirm success
+echo "MAC address spoofed successfully to $NEW_MAC."
