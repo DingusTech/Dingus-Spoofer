@@ -1,33 +1,36 @@
 #!/bin/bash
 
-# Define the source and destination for the spoofmac script
-SOURCE_FILE="spoofmac.sh"
-DEST_FILE="/usr/local/bin/spoofmac.sh"
+# Define color variables
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
+RESET='\033[0m'
 
-# Check if the spoofmac.sh file exists in the current directory
-if [ ! -f "$SOURCE_FILE" ]; then
-    echo "Error: $SOURCE_FILE not found in the current directory!"
+# Start installation
+echo -e "${CYAN}Starting the Dingus Spoofer installation process...${RESET}"
+
+# Check if running as root
+if [[ $EUID -ne 0 ]]; then
+    echo -e "${RED}Error: This script must be run as root. Use 'sudo ./install.sh'.${RESET}"
     exit 1
 fi
 
-# Copy the spoofmac.sh script to /usr/local/bin to make it available system-wide
-echo "Installing spoofmac.sh script to /usr/local/bin..."
-sudo cp "$SOURCE_FILE" "$DEST_FILE"
+# Copy script to /usr/local/bin
+echo -e "${YELLOW}Copying the spoofmac.sh script to /usr/local/bin...${RESET}"
+cp spoofmac.sh /usr/local/bin/spoofmac.sh
 
-# Check if the file was copied successfully
-if [ ! -f "$DEST_FILE" ]; then
-    echo "Error: Failed to copy $SOURCE_FILE to $DEST_FILE."
-    exit 1
-fi
+# Make it executable
+echo -e "${YELLOW}Setting executable permissions...${RESET}"
+chmod +x /usr/local/bin/spoofmac.sh
 
-# Make the script executable
-echo "Making spoofmac.sh executable..."
-sudo chmod +x "$DEST_FILE"
-
-# Verify the installation by checking if the file is executable
-if [ -x "$DEST_FILE" ]; then
-    echo "Installation successful! You can now use spoofmac.sh by typing 'sudo spoofmac.sh' in the terminal."
+# Verify installation
+if [[ -f /usr/local/bin/spoofmac.sh ]]; then
+    echo -e "${GREEN}Installation successful!${RESET}"
+    echo -e "${BLUE}You can now use Dingus Spoofer by running:${RESET} ${MAGENTA}sudo spoofmac.sh${RESET}"
 else
-    echo "Error: Failed to make $DEST_FILE executable."
+    echo -e "${RED}Error: The installation failed. Please check your permissions and try again.${RESET}"
     exit 1
 fi
