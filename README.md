@@ -15,55 +15,66 @@
 
 To install Dingus Spoofer, follow these steps:
 
-1. **Clone the Repository**  
-   Open your terminal and clone this repository:  
-   "git clone https://github.com/DingusTech/Dingus-Spoofer.git"
+1. Clone the repository:  
+   `git clone https://github.com/DingusTech/Dingus-Spoofer.git`
 
-2. **Navigate to the Directory**  
-   Move into the repository directory:  
-   "cd Dingus-Spoofer"
+2. Navigate to the directory:  
+   `cd Dingus-Spoofer`
 
-3. **Run the Installer**  
-   Install the script by running the following command:  
-   "sudo ./install.sh"  
-   This will place the "spoofmac" script in your system's "/usr/local/bin" directory.
+3. Make the installation script executable:  
+   `chmod +x install.sh`
 
-4. **Verify Installation**  
-   Check if the script is installed by running:  
-   "sudo spoofmac"
+4. Run the installer:  
+   `sudo ./install.sh`
+
+5. Verify the installation:  
+   `sudo spoofmac.sh`
 
 ---
 
 ## Usage
 
-To use Dingus Spoofer:
+To use Dingus Spoofer, run:  
+`sudo spoofmac.sh`  
 
-1. Run the script:  
-   "sudo spoofmac"
+Then, choose an option from the menu:  
+1. Use a randomly generated MAC address.  
+2. Generate a new random MAC address.  
+3. Manually input a MAC address.  
+4. Exit the script without making changes.
 
-2. Choose an option from the menu:  
-   - Option 1: Generate and use a random MAC address.  
-   - Option 2: Manually input a MAC address.  
-   - Option 3: Exit the script without making changes.
+---
+
+## Troubleshooting
+
+If the script does not work as expected:  
+1. Ensure the script is installed correctly:  
+   `ls -l /usr/local/bin/spoofmac.sh`  
+
+2. If the script is missing or not working, rerun the installation process:  
+   `cd Dingus-Spoofer && sudo ./install.sh`
 
 ---
 
 ## Uninstallation
 
-To remove the script, simply delete it from the "/usr/local/bin" directory:  
-"sudo rm /usr/local/bin/spoofmac"
+To remove the script, delete it from the `/usr/local/bin` directory:  
+`sudo rm /usr/local/bin/spoofmac.sh`  
+
+Optionally, remove the repository folder:  
+`rm -rf Dingus-Spoofer`
 
 ---
 
 ## License
 
-This project is licensed under the Creative Commons Zero v1.0 Universal. Proper attribution is required for use and distribution.
+This project is licensed under the Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0). Proper attribution is required for use and distribution.
 
 ---
 
 ## Disclaimer
 
-Dingus Spoofer is intended for educational and lawful purposes only. Dingus Tech nor any contributers are not responsible for any misuse of this tool.
+Dingus Spoofer is intended for educational and lawful purposes only. Dingus Tech nor any contributors are responsible for any misuse of this tool.
 
 ---
 
