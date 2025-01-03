@@ -1,54 +1,73 @@
-# MAC Spoofer
+# Dingus Spoofer
 
-A simple script to spoof your MAC address on macOS. This script allows you to generate random MAC addresses or manually set one for your network interface.
+**Dingus Spoofer** is a simple script to spoof your MAC address on macOS. It allows you to generate random MAC addresses or manually set one for your network interface, making it easy to anonymize your device.
 
 ---
 
 ## Features
-- Randomly generate valid MAC addresses.
-- Manually enter your desired MAC address.
+- Generate random valid MAC addresses.
+- Manually set your desired MAC address.
 - Automatically disable and re-enable Wi-Fi to apply changes.
 
 ---
 
 ## Installation
 
-Follow these steps to install the `spoofmac` command on your system:
+To install Dingus Spoofer, follow these steps:
 
-1. Clone this repository to your computer. To do this, go to the repository page on GitHub, copy the repository link, and use the `git clone` command. After cloning, navigate into the folder using the `cd` command.
+1. **Clone the Repository**  
+   Open your terminal and clone this repository:  
+   "git clone https://github.com/DingusTech/Dingus-Spoofer.git"
 
-2. Run the installer script to set up the `spoofmac` command on your system. You must use `sudo` since the installer needs root permissions to place the file in `/usr/local/bin`.
+2. **Navigate to the Directory**  
+   Move into the repository directory:  
+   "cd Dingus-Spoofer"
 
-3. Once the installer has completed, you can run the command `sudo spoofmac` to use the script.
+3. **Run the Installer**  
+   Install the script by running the following command:  
+   "sudo ./install.sh"  
+   This will place the "spoofmac" script in your system's "/usr/local/bin" directory.
 
-If you encounter any issues, double-check that the script was correctly installed in `/usr/local/bin` and that it has executable permissions.
+4. **Verify Installation**  
+   Check if the script is installed by running:  
+   "sudo spoofmac"
 
 ---
 
 ## Usage
 
-To spoof your MAC address, simply run the command `sudo spoofmac`. The script will guide you through the process with the following options:
+To use Dingus Spoofer:
 
-1. Generate and use a random MAC address.
-2. Manually enter a MAC address.
-3. Exit the script without making any changes.
+1. Run the script:  
+   "sudo spoofmac"
+
+2. Choose an option from the menu:  
+   - Option 1: Generate and use a random MAC address.  
+   - Option 2: Manually input a MAC address.  
+   - Option 3: Exit the script without making changes.
 
 ---
 
 ## Uninstallation
 
-If you wish to remove the `spoofmac` script, delete it from `/usr/local/bin` using the following command:
-
-`sudo rm /usr/local/bin/spoofmac`
+To remove the script, simply delete it from the "/usr/local/bin" directory:  
+"sudo rm /usr/local/bin/spoofmac"
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. You are free to use and share the script but must provide attribution.
+This project is licensed under the [MIT License](LICENSE). Proper attribution is required for use and distribution.
 
 ---
 
 ## Disclaimer
 
-This script is for educational purposes only. The author is not responsible for any misuse of this tool.
+Dingus Spoofer is intended for educational and lawful purposes only. The author is not responsible for any misuse of this tool.
+
+---
+
+## Repository
+
+Find the latest version of Dingus Spoofer and updates on GitHub:  
+[https://github.com/DingusTech/Dingus-Spoofer](https://github.com/DingusTech/Dingus-Spoofer)
