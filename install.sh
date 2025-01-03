@@ -1,32 +1,33 @@
 #!/bin/bash
 
-# Make sure the script is being run with superuser privileges
-if [ "$(id -u)" != "0" ]; then
-    echo "You must run this script as root. Use sudo."
+# Define the source and destination for the spoofmac script
+SOURCE_FILE="spoofmac.sh"
+DEST_FILE="/usr/local/bin/spoofmac.sh"
+
+# Check if the spoofmac.sh file exists in the current directory
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Error: $SOURCE_FILE not found in the current directory!"
     exit 1
 fi
 
-# Define the source and destination locations
-SOURCE_PATH="./spoofmac"  # Path to the spoofmac script in the repository
-DEST_PATH="/usr/local/bin/spoofmac"  # Location to install the script
+# Copy the spoofmac.sh script to /usr/local/bin to make it available system-wide
+echo "Installing spoofmac.sh script to /usr/local/bin..."
+sudo cp "$SOURCE_FILE" "$DEST_FILE"
 
-# Check if the spoofmac script exists
-if [ ! -f "$SOURCE_PATH" ]; then
-    echo "The script for Dingus Spoofer does not exist. Please make sure you're running the install script from the repository."
+# Check if the file was copied successfully
+if [ ! -f "$DEST_FILE" ]; then
+    echo "Error: Failed to copy $SOURCE_FILE to $DEST_FILE."
     exit 1
 fi
-
-# Copy the spoofmac script to /usr/local/bin
-echo "Installing spoofmac..."
-cp "$SOURCE_PATH" "$DEST_PATH"
 
 # Make the script executable
-chmod +x "$DEST_PATH"
+echo "Making spoofmac.sh executable..."
+sudo chmod +x "$DEST_FILE"
 
-# Verify the installation
-if [ -f "$DEST_PATH" ]; then
-    echo "spoofmac installed successfully!"
+# Verify the installation by checking if the file is executable
+if [ -x "$DEST_FILE" ]; then
+    echo "Installation successful! You can now use spoofmac.sh by typing 'sudo spoofmac.sh' in the terminal."
 else
-    echo "There was an error installing Dingus Spoofer."
+    echo "Error: Failed to make $DEST_FILE executable."
     exit 1
 fi
