@@ -57,13 +57,13 @@ To remove the script, simply delete it from the "/usr/local/bin" directory:
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Proper attribution is required for use and distribution.
+This project is licensed under the Creative Commons Zero v1.0 Universal. Proper attribution is required for use and distribution.
 
 ---
 
 ## Disclaimer
 
-Dingus Spoofer is intended for educational and lawful purposes only. The author is not responsible for any misuse of this tool.
+Dingus Spoofer is intended for educational and lawful purposes only. Dingus Tech nor any contributers are not responsible for any misuse of this tool.
 
 ---
 
